@@ -1,23 +1,29 @@
-name: linting-pipeline              
+name: linting-pipeline
 on:
-   push:
-       branches:
-           - develop
-   pull_request:
-       branches:
-         - develop
+  push:
+    branches:
+      - develop
+  pull_request:
+    branches:
+      - develop
+
 jobs:
   linting-job:
     runs-on: ubuntu-latest
     steps:
-
-      - name: Assignment Repository
+      - name: Checkout repository
         uses: actions/checkout@v4
-      - name: create package.json
+
+      - name: Create package.json
         run: npm init -y
+
       - name: Install dependencies
-        run : npm install --save-dev htmlhint stylelint
+        run: npm install --save-dev htmlhint 
+      - name: Install other dependencies
+        run : npm install --save-dev stylelint
+
       - name: Run HtmlHint
         run: npx htmlhint "**/*.html"
-      - name: Run CSSfiles
+
+      - name: Run Stylelint
         run: npx stylelint "**/*.css"
